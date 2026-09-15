@@ -1,405 +1,9 @@
-/*console.log("h")
-const words = ["KIWI","MANGO","GAVYA","APPLE","DRAGON"];
 
-const grid = [
-  ["K","I","W","I","A"],
-  ["M","T","N","G","O"],
-  ["B","L","U","E","X"],
-  ["A","B","C","D","E"],
-  ["F","G","H","I","J"]
-];
-
-
-let Rl = grid.length;
-let cl = grid[0].length;
-
-
-let mat=[];
-for(let i=0;i<Rl;i++){
-    mat[i]=[];
-    for(let j=0;j<cl;j++){
-        mat[i][j]=0;
-    }let horizontal = Math.random() < 0.5; // de
-}
-
-// matrix to track selected cells
-//let mat = Array.from({length: Rl}, () => Array(cl).fill(0));
-
-const gridDiv = document.getElementById("grid");
-const wordList = document.getElementById("wordList");
-const result = document.getElementById("result");
-const notE = document.getElementById("NE");
-
-let selectedWord = "";
-
-
-// display words
-for(let word of words){
-  let li = document.createElement("li");
-  li.textContent = word;
-  wordList.appendChild(li);
-}
-
-// create grid
-for(let i=0;i<Rl;i++){
-  for(let j=0;j<cl;j++){
-    let div = document.createElement("div");
-    div.className = "cell";
-    div.textContent = grid[i][j];
-
-    div.onclick = function(){
-      if(mat[i][j] === 0){
-        selectedWord += grid[i][j];
-        mat[i][j] = 1;
-        div.classList.add("selected");
-        checkWord();
-      }
-    };
-
-    gridDiv.appendChild(div);
-  }
-}
-
-function checkWord(){
-  // check if selected word is correct
-  if(words.includes(selectedWord)){
-    result.textContent = "You found " + selectedWord;
-
-    document.querySelectorAll(".selected").forEach(c=>{
-      c.classList.add("found");
-      c.classList.remove("selected");
-    });
-
-    // remove word from list
-    let items = wordList.querySelectorAll('li');
-    items.forEach(li=>{
-      if(li.textContent === selectedWord){
-        li.remove();
-      }
-    });
-
-    selectedWord = "";
-
-    // reset mat for next selection
-    //mat = Array.from({length: Rl}, () => Array(cl).fill(0));
-  }
-
-  // wrong word logic
-  if(selectedWord.length > 8){
-    selectedWord = "";
-
-    document.querySelectorAll(".selected").forEach(c=>{
-      c.classList.remove("selected");
-    });
-
-   // mat = Array.from({length: Rl}, () => Array(cl).fill(0));
-
-    notE.innerText = "This word does not exist in the grid, please try another word.";
-  }
-}
-
-*/
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-// ======= CONFIGURATION =======
-const words = ["KIWI", "MANGO", "BLUE", "ANKIT", "ORANG"];
+const words = ["KIWI", "MANGO", "BLUE", "ANKIT", "ORANG", "NARENDER", "CUPCAKE"];
 const rows = 8;
 const cols = 8;
 
-// ======= DYNAMIC GRID =======
-let grid = [];
-let mat = [];
 
-// initialize grid with empty strings and mat with zeros
-for (let i = 0; i < rows; i++) {
-    grid[i] = [];
-    mat[i] = [];
-    for (let j = 0; j < cols; j++) {
-        grid[i][j] = ""; 
-        mat[i][j] = 0; 
-    }
-}
-
-// ======= PLACE WORDS (HORIZONTAL & VERTICAL RANDOMLY) =======
-function placeWord(word) {
-    let placed = false;
-
-    while (!placed) {
-        let horizontal = Math.random() < 0.5; // decide horizontal or vertical
-        if (horizontal) {
-            let r = Math.floor(Math.random() * rows);
-            let c = Math.floor(Math.random() * (cols - word.length + 1));
-            let canPlace = true;
-            for (let k = 0; k < word.length; k++) {
-                if (grid[r][c + k] !== "" && grid[r][c + k] !== word[k]) canPlace = false;
-            }
-            if (canPlace) {
-                for (let k = 0; k < word.length; k++) grid[r][c + k] = word[k];
-                placed = true;
-            }
-        } else {
-            let r = Math.floor(Math.random() * (rows - word.length + 1));
-            let c = Math.floor(Math.random() * cols);
-            let canPlace = true;
-            for (let k = 0; k < word.length; k++) {
-                if (grid[r + k][c] !== "" && grid[r + k][c] !== word[k]) canPlace = false;
-            }
-            if (canPlace) {
-                for (let k = 0; k < word.length; k++) grid[r + k][c] = word[k];
-                placed = true;
-            }
-        }
-    }
-}
-
-// place all words
-for (let word of words) {
-    placeWord(word);
-}
-
-
-// fill empty cells with random letters
-for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-        if (grid[i][j] === "") {
-            grid[i][j] = String.fromCharCode(65 + Math.floor(Math.random() * 26));
-        }
-    }
-}
-
-// ======= DOM ELEMENTS =======
-const gridDiv = document.getElementById("grid");
-const wordList = document.getElementById("wordList");
-const result = document.getElementById("result");
-const notE = document.getElementById("NE");
-
-let selectedWord = "";
-
-// display word list
-for (let word of words) {
-    let li = document.createElement("li");
-    li.textContent = word;
-    wordList.appendChild(li);
-}
-
-// set grid CSS
-gridDiv.style.display = "grid";
-gridDiv.style.gridTemplateRows = `repeat(${rows}, 50px)`;
-gridDiv.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
-
-// create grid divs
-for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-        let div = document.createElement("div");
-        div.className = "cell";
-        div.textContent = grid[i][j];
-
-        div.onclick = function () {
-            if (mat[i][j] === 0) {
-                selectedWord += grid[i][j];
-                mat[i][j] = 1;
-                div.classList.add("selected");
-                checkWord();
-            }
-        };
-
-        gridDiv.appendChild(div);
-    }
-}
-
-// ======= STRING SEARCH FUNCTIONS =======
-function searchWordInGrid(word) {
-    let positions = [];
-    let R = grid.length;
-    let C = grid[0].length;
-
-    // horizontal left → right
-    for (let i = 0; i < R; i++) {
-        for (let j = 0; j <= C - word.length; j++) {
-            let match = true;
-            for (let k = 0; k < word.length; k++) {
-                if (grid[i][j + k] !== word[k]) match = false;
-            }
-            if (match) {
-                for (let k = 0; k < word.length; k++) positions.push([i, j + k]);
-                return positions;
-            }
-        }
-    }
-
-    // vertical top → bottom
-    for (let j = 0; j < C; j++) {
-        for (let i = 0; i <= R - word.length; i++) {
-            let match = true;
-            for (let k = 0; k < word.length; k++) {
-                if (grid[i + k][j] !== word[k]) match = false;
-            }
-            if (match) {
-                for (let k = 0; k < word.length; k++) positions.push([i + k, j]);
-                return positions;
-            }
-        }
-    }
-
-    return null; // not found
-}
-
-function highlightWord(word) {
-    let pos = searchWordInGrid(word);
-    if (!pos) return;
-    pos.forEach(([i, j]) => {
-        let index = i * cols + j;
-        let div = gridDiv.children[index];
-        div.classList.add("found");
-    });
-
-    // remove word from list
-    let items = wordList.querySelectorAll("li");
-    items.forEach((li) => {
-        if (li.textContent === word) li.remove();
-    });
-}
-
-// ==let horizontal = Math.random() < 0.5; // de===== CHECK WORD ON CLICK =======
-function checkWord() {
-    if (words.includes(selectedWord)) {
-        result.textContent = "You found " + selectedWord;
-       highlightWord(selectedWord);
-        selectedWord = "";
-        mat = Array.from({ length: rows }, () => Array(cols).fill(0));
-        notE.innerText = "";
-    }
-
-    // max length exceeded = wrong word
-    if (selectedWord.length > 8) {
-        selectedWord = "";
-        document.querySelectorAll(".selected").forEach((c) => c.classList.remove("selected"));
-        mat = Array.from({ length: rows }, () => Array(cols).fill(0));
-        notE.innerText = "This word does not exist, try another word.";
-    }
-}
-
-// ======= AUTO HIGHLIGHT ALL WORDS =======
-for (let word of words) {
-    highlightWord(word);
-}
-
-
-
-*/
-
-
-
-
-
-
-
-/*
-
-
-function searchWordInGrid(word) {
-    let positions = [];
-    let R = grid.length;
-    let C = grid[0].length;
-
-    // horizontal left → right
-    for (let i = 0; i < R; i++) {
-        for (let j = 0; j <= C - word.length; j++) {
-            let match = true;
-            for (let k = 0; k < word.length; k++) {
-                if (grid[i][j + k] !== word[k]) match = false;
-            }
-            if (match) {
-                for (let k = 0; k < word.length; k++){
-                        positions.push([i, j + k]);
-                    }
-                return positions;
-            }
-        }
-    }
-
-    // vertical top → bottom
-    for (let j = 0; j < C; j++) {
-        for (let i = 0; i <= R - word.length; i++) {
-            let match = true;
-            for (let k = 0; k < word.length; k++) {
-                if (grid[i + k][j] !== word[k]) match = false;
-            }
-            if (match) {
-                for (let k = 0; k < word.length; k++) positions.push([i + k, j]);
-                return positions;
-            }
-        }
-    }
-
-    return null; // not found
-}
-    */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const words = ["KIWI", "MANGO", "BLUE", "ANKIT", "ORANG","NARENDER","CUPCAKE"];
-const rows = 8;
-const cols = 8;
-
-// ======= DYNAMIC GRID ===
 let grid = [];
 let mat = [];
 
@@ -413,7 +17,7 @@ for (let i = 0; i < rows; i++) {
     }
 }
 
-// ======= PLACE WORDS (HORIZONTAL & VERTICAL RANDOMLY) =======
+
 
 
 
@@ -449,7 +53,7 @@ function placeWord(word) {
             }
         }
 
-        // 1 = vertical
+   
         else if (direction === 1) {
 
             let r = Math.floor(Math.random() * (rows - word.length + 1));
@@ -475,7 +79,7 @@ function placeWord(word) {
             }
         }
 
-        // 2 = diagonal right-down ↘
+       
         else if (direction === 2) {
 
             let r = Math.floor(Math.random() * (rows - word.length + 1));
@@ -501,7 +105,7 @@ function placeWord(word) {
             }
         }
 
-        // 3 = diagonal left-down ↙
+       
         else if (direction === 3) {
 
             let r = Math.floor(Math.random() * (rows - word.length + 1));
@@ -527,7 +131,6 @@ function placeWord(word) {
             }
         }
 
-        // 4 = diagonal right-up ↗
    
     }
 }
@@ -535,13 +138,13 @@ function placeWord(word) {
 
 
 
-// place all words
+
 for (let word of words) {
     placeWord(word);
 }
 
 
-// fill empty cells with random letters
+
 for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
         if (grid[i][j] === "") {
@@ -550,7 +153,7 @@ for (let i = 0; i < rows; i++) {
     }
 }
 
-// ======= DOM ELEMENTS =======
+
 const gridDiv = document.getElementById("grid");
 const wordList = document.getElementById("wordList");
 const result = document.getElementById("result");
@@ -558,14 +161,14 @@ const notE = document.getElementById("NE");
 
 let selectedWord = "";
 
-// display word list
+
 for (let word of words) {
     let li = document.createElement("li");
     li.textContent = word;
     wordList.appendChild(li);
 }
 
-// set grid CSS
+
 gridDiv.style.display = "grid";
 gridDiv.style.gridTemplateRows = `repeat(${rows}, 50px)`;
 gridDiv.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
