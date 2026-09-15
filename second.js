@@ -1,7 +1,7 @@
 const canvas = document.getElementById("canvasId");
 const ctx = canvas.getContext("2d");
 
-// IMAGE OBJECTS
+
 let Rook = new Image();
 let Knight = new Image();
 let Bishop = new Image();
@@ -9,7 +9,7 @@ let Queen = new Image();
 let King = new Image();
 let Pawn = new Image();
 
-// IMAGE SOURCES
+
 Rook.src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Chess_piece_-_White_rook.JPG";
 Knight.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqCdILrpAkJSpUbNSA-B95ZTFCq6KJv4xXqw&s";
 Bishop.src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Chess_bishop_0970.jpg/250px-Chess_bishop_0970.jpg";
@@ -65,8 +65,7 @@ const cellWidth=board.width/cols;
 const cellHeight=board.height/rows;
 
 
-// DRAW BOARD
-//function drawBoard(){
+
 
 for(let row=0;row<rows;row++){
 
@@ -82,7 +81,7 @@ ctx.fillRect(x,y,cellWidth,cellHeight);
 
 }
 
-//}
+
 
 
 
@@ -162,7 +161,7 @@ drawdownPieces();
 
 
 
-//fill in bottam side 
+
 
 
 
@@ -174,12 +173,12 @@ function drawdownPieces(){
     let botamy=board.y+(6*cellHeight);
 let x=board.x;
 
-// first row pieces
+
 let firstRow=[BRook,BKnight,BBishop,BQueen,BKing,BBishop,BKnight,BRook];
 
 
 
-// pawn row
+
 
 
 for(let i=0;i<8;i++){
@@ -205,7 +204,7 @@ pX+=cellWidth;
 
 
 
-//drawdownPieces();
+
 
 
 canvas.addEventListener("click" ,e=>{
